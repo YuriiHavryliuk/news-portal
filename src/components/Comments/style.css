@@ -1,0 +1,23 @@
+.comments__title {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 20px;
+}
+
+.comments__btn {
+    background: #824747;
+}
+
+ .comment__text{
+    margin: 15px;
+    border-bottom: 1px solid #000;
+}
+
+.comment__text:last-of-type {
+    border: none;
+}
+
+.comment__content {
+    border: 2px solid #000;
+    margin-top: 5px
+}
