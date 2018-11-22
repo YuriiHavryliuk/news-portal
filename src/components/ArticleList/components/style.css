@@ -1,0 +1,16 @@
+.article__title {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0;
+}
+
+.article__btn {
+    background: #2b5894;
+    margin-right: 20px;
+}
+
+.article__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

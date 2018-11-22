@@ -1,0 +1,10 @@
+.btn-primary {
+    border: none;
+    border-radius: 4px;
+    padding: 8px 15px;
+    background: #824747;
+    color: #fff;
+    outline: none;
+    cursor: pointer;
+    text-transform: uppercase;
+}
