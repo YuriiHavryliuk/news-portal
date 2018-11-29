@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 
+import isArrayValid from '../../utils/isArrayValid'
 import style from './style.css'
 
 export default class Comments extends Component {
@@ -16,7 +17,7 @@ export default class Comments extends Component {
     const { visible } = this.state
     return (
       <div>
-        {comments.length > 0 && (
+        {isArrayValid(comments) && (
           <div>
             <h3 className="comments__title">comments ({comments.length})</h3>
             <button
@@ -36,7 +37,7 @@ export default class Comments extends Component {
             )}
           </div>
         )}
-        {!comments.length && (
+        {!isArrayValid(comments) && (
           <div>
             <b>Для этой статьи нет комментариев</b>
           </div>
