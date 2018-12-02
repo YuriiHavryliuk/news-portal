@@ -8,6 +8,10 @@
   margin-right: 0;
 }
 
+.article__btns {
+    display: flex;
+}
+
 .article__btn {
     background: #2b5894;
     margin-right: 20px;
@@ -17,4 +21,17 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal__btns {
+  margin: 0 auto;
+}
+
+.modal__btn {
+  margin: 20px 10px 0 10px;
+}
+
+.article-block {
+  border: 1px solid #ccc;
+  padding: 10px;
 }
