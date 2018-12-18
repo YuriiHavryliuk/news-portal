@@ -1,30 +1,11 @@
 import React, { PureComponent, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import Modal from 'react-modal'
+import ReactModal from '../../Modal'
 import shave from 'shave'
 
 import style from './style.css'
-
 import Comments from '../../Comments'
-
-export const ThemeContext = React.createContext(true)
-
-const modalStyles = {
-  content: {
-    top: '20%',
-    left: '50%',
-    right: 'auto',
-    padding: '50px',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
-    background: 'rgb(169, 164, 164)',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-}
-
-Modal.setAppElement('body')
+import ThemeContext from '../../../contexts'
 
 export default class Article extends PureComponent {
   constructor(props) {
@@ -33,7 +14,6 @@ export default class Article extends PureComponent {
     this.state = {
       isOpen: false,
       modalIsOpen: false,
-      isRemoveArticle: false,
     }
   }
 
@@ -47,75 +27,58 @@ export default class Article extends PureComponent {
   }
 
   render() {
-    const { article } = this.props
-    const { isOpen, isRemoveArticle } = this.state
+    const { article, removeArticle } = this.props
+    const { isOpen } = this.state
     return (
       <Fragment>
-        {!isRemoveArticle ? (
-          <div className="article-block">
-            <div className="article__header">
-              <h1 className="article__title">{article.title}</h1>
-              <div>
-                <div className="article__btns">
-                  <button
-                    onClick={this.showsText}
-                    className="btn-primary article__btn"
-                  >
-                    {isOpen ? 'hide' : 'show'}
-                  </button>
-
-                  <ThemeContext.Consumer>
-                    {show => (
-                      <button
-                        className="btn-primary article__btn"
-                        onClick={this.openModal}
-                        style={{ display: show ? 'block' : 'none' }}
-                      >
-                        Remove
-                      </button>
-                    )}
-                  </ThemeContext.Consumer>
-                </div>
-
-                <Modal isOpen={this.state.modalIsOpen} style={modalStyles}>
-                  <div>
-                    Do you really want to delete the <b>{article.title}</b>{' '}
-                    article?
-                  </div>
-                  <div className="modal__btns">
-                    <button
-                      className="btn-primary modal__btn"
-                      onClick={this.removeArticle}
-                    >
-                      yes
-                    </button>
-                    <button
-                      className="btn-primary modal__btn"
-                      onClick={this.closeModal}
-                    >
-                      no
-                    </button>
-                  </div>
-                </Modal>
-              </div>
-            </div>
-
+        <div className="article-block">
+          <ReactModal
+            isOpen={this.state.modalIsOpen}
+            closeModal={this.closeModal}
+            removeArticle={removeArticle}
+            article={article}
+          />
+          <div className="article__header">
+            <h1 className="article__title">{article.title}</h1>
             <div>
-              <p
-                className="article"
-                ref={node => {
-                  this.node = node
-                }}
-              >
-                {article.text}
-              </p>
-              <div>
-                <b>{article.date}</b>
+              <div className="article__btns">
+                <button
+                  onClick={this.showsText}
+                  className="btn-primary article__btn"
+                >
+                  {isOpen ? 'hide' : 'show'}
+                </button>
+
+                <ThemeContext.Consumer>
+                  {show => (
+                    <button
+                      className="btn-primary article__btn"
+                      onClick={this.openModal}
+                      style={{ display: show ? 'block' : 'none' }}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </ThemeContext.Consumer>
               </div>
-              {isOpen && <Comments comments={article.comments} />}
             </div>
           </div>
-        ) : null}
+
+          <div>
+            <p
+              className="article"
+              ref={node => {
+                this.node = node
+              }}
+            >
+              {article.text}
+            </p>
+            <div>
+              <b>{article.date}</b>
+            </div>
+            {isOpen && <Comments comments={article.comments} />}
+          </div>
+        </div>
       </Fragment>
     )
   }
@@ -149,22 +112,16 @@ export default class Article extends PureComponent {
     )
   }
 
+  handleResize = () => {
+    this.toggleText()
+  }
+
   openModal = () => {
     this.setState({ modalIsOpen: true })
   }
 
   closeModal = () => {
     this.setState({ modalIsOpen: false })
-  }
-
-  removeArticle = () => {
-    this.setState(prevState => ({
-      isRemoveArticle: !prevState.isRemoveArticle,
-    }))
-  }
-
-  handleResize = () => {
-    this.toggleText()
   }
 }
 
